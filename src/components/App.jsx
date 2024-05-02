@@ -15,14 +15,16 @@ export const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const contactsStorage = JSON.parse(localStorage.getItem('contacts'));
+    console.log('get item');
+    const contactsStorage = JSON.parse(localStorage.getItem('contactsStorage'));
     if (contactsStorage) {
       setContacts(contactsStorage);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    console.log(contacts)
+    localStorage.setItem('contactsStorage', JSON.stringify(contacts));
   }, [contacts]);
 
   const saveContact = contact => {
@@ -31,18 +33,18 @@ export const App = () => {
       .some(item => item === contact.name.toLowerCase());
 
     if (checkName) {
-      return alert('Contact added before');
+      alert('Contact added before');
+      return false;
     } else {
-      setContacts(prevContacts => {
-        prevContacts = [
-          ...prevContacts,
-          {
-            id: nanoid(),
-            name: contact.name,
-            number: contact.number,
-          },
-        ];
-      });
+      setContacts([
+        ...contacts,
+        {
+          id: nanoid(),
+          name: contact.name,
+          number: contact.number,
+        },
+      ]);
+      return true;
     }
   };
 
@@ -59,9 +61,7 @@ export const App = () => {
   };
 
   const filterValue = filter.toLowerCase();
-    console.log(filterValue);
 
-  console.log(contacts)
   const filtredContacts = contacts.filter(item =>
     item.name.toLowerCase().includes(filterValue)
   );
