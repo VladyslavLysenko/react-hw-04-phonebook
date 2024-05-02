@@ -68,7 +68,6 @@ export const App = () => {
       <Form onSubmit={saveContact} />
       <Filter value={filter} onChange={saveFilter} />
       <ContactsList contacts={filtredContacts} handlerDelete={deleteContact} />
-      
     </>
   );
 };
