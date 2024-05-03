@@ -17,29 +17,13 @@ export const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    // console.log('did update');
-    const contactsStorage = JSON.parse(localStorage.getItem('contactsStorage'));
-
-    if (contactsStorage) {
-      setContacts(contactsStorage);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (contacts.length !== 0) {
-      console.log(contacts);
-      localStorage.setItem('contactsStorage', JSON.stringify(contacts));
-    }
+    localStorage.setItem('contactsStorage', JSON.stringify(contacts));
   }, [contacts]);
 
   const saveContact = contact => {
-    console.log('contact', contact);
-    console.log('contacts', contacts);
-
     const checkName = contacts
       .map(item => item.name.toLowerCase())
       .some(item => item === contact.name.toLowerCase());
-    console.log('checkName', checkName);
 
     if (checkName) {
       alert('Contact added before');
@@ -53,9 +37,6 @@ export const App = () => {
           number: contact.number,
         },
       ]);
-
-      // console.log('checkName', checkName);
-      // console.log(contacts);
 
       return true;
     }
